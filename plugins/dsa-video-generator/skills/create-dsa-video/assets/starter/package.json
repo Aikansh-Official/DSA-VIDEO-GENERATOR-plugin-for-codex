@@ -1,0 +1,9 @@
+{
+  "name": "lesson-video-lab-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"voices": "node scripts/lab.mjs voices", "video:prepare": "node scripts/lab.mjs prepare", "preview": "node scripts/lab.mjs preview", "render": "node scripts/lab.mjs render", "test": "node --test tests/*.test.mjs", "typecheck": "tsc --noEmit"},
+  "dependencies": {"@remotion/cli": "4.0.518", "remotion": "4.0.518", "react": "19.2.3", "react-dom": "19.2.3"},
+  "devDependencies": {"typescript": "5.9.3", "@types/react": "19.2.7", "@types/node": "22.19.15"}
+}

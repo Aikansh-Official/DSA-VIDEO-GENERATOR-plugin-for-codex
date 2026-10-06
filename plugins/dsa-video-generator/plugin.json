@@ -1,0 +1,32 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "dsa-video-generator",
+  "version": "1.0.0",
+  "description": "Create narrated educational videos locally with researched explanations, brute force, optimized algorithms, code and measured speech timing.",
+  "author": {"name": "Aikansh Katiyar", "url": "https://github.com/Aikansh-Official"},
+  "homepage": "https://github.com/Aikansh-Official/DSA-VIDEO-GENERATOR-plugin-for-codex",
+  "repository": "https://github.com/Aikansh-Official/DSA-VIDEO-GENERATOR-plugin-for-codex",
+  "license": "MIT",
+  "keywords": ["dsa", "education", "video", "algorithms", "local", "remotion"],
+  "extensions": {"com.openai": {
+    "interface": {
+      "displayName": "DSA Video Generator",
+      "shortDescription": "Algorithms explained in video",
+      "longDescription": "Ask for a DSA, algorithms, computer science, mathematics or physics lesson. The skill guides Codex to research a source, explain the problem, teach brute force and optimization with complexity, animate a dry run, connect the code, and render an English narrated MP4. Includes Two Sum and Knapsack examples, portrait and landscape layouts, installed system voices and optional Piper, speech caching, measured scene durations, transcripts and editable Remotion previews. Requires a local execution-capable Codex or ChatGPT Work environment and Node.js 22+. Windows is tested; macOS and Linux voice routes require platform testing. This package is not a hosted video service and does not run in an ordinary chat without execution tools. No paid rendering or speech API is needed; normal host usage and dependency licenses still apply.",
+      "developerName": "Aikansh Katiyar",
+      "category": "Developer Tools",
+      "capabilities": ["Educational video creation", "Local English narration", "Algorithm animations", "MP4 export"],
+      "websiteURL": "https://github.com/Aikansh-Official/DSA-VIDEO-GENERATOR-plugin-for-codex",
+      "supportURL": "https://github.com/Aikansh-Official/DSA-VIDEO-GENERATOR-plugin-for-codex/issues",
+      "privacyPolicyURL": "https://github.com/Aikansh-Official/DSA-VIDEO-GENERATOR-plugin-for-codex/blob/main/PRIVACY.md",
+      "logo": "./assets/logo.svg",
+      "composerIcon": "./assets/logo.svg",
+      "screenshots": ["./assets/screenshot.png"],
+      "brandColor": "#345CC8",
+      "brandColorDark": "#7AA2FF",
+      "defaultPrompt": ["Make a narrated Two Sum video with brute force, optimization, complexity and code", "Explain this algorithm with a complete visual dry run", "Set up local video generation and render the included Two Sum lesson"]
+    },
+    "onboardingSkill": "./skills/create-dsa-video/SKILL.md",
+    "publication": {"release_notes": "First release by Aikansh Katiyar: portable local setup, Two Sum and Knapsack examples, measured narration, cached speech, portrait visuals, code walkthroughs and MP4 export."}
+  }}
+}

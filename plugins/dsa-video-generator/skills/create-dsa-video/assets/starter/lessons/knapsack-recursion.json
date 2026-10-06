@@ -1,0 +1,975 @@
+{
+  "version": 1,
+  "id": "knapsack-recursion",
+  "title": "0/1 Knapsack: Every Call and Return",
+  "domain": "dsa",
+  "language": "en",
+  "codeLines": [
+    "int func(int ind, int wt_left) {",
+    "  if (wt_left == 0) return 0;",
+    "  if (ind < 0) return 0;",
+    "  int ans = func(ind - 1, wt_left);",
+    "  if (wt_left >= wt[ind])",
+    "    ans = max(ans, val[ind] +",
+    "      func(ind - 1, wt_left - wt[ind]));",
+    "  return ans;",
+    "}"
+  ],
+  "items": [
+    {
+      "label": "A",
+      "weight": 1,
+      "value": 6
+    },
+    {
+      "label": "B",
+      "weight": 2,
+      "value": 10
+    },
+    {
+      "label": "C",
+      "weight": 3,
+      "value": 12
+    }
+  ],
+  "scenes": [
+    {
+      "id": "step-1",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "concept",
+      "title": "A bag with a limit",
+      "narration": "Imagine choosing projects. Each project costs some resources and gives a reward. Our bag holds four units. A costs one and gives six. B costs two and gives ten. C costs three and gives twelve. You may choose each project once.",
+      "note": "Budget 4. Maximize reward, not the number of projects.",
+      "capacity": 4,
+      "maxCapacity": 4
+    },
+    {
+      "id": "step-2",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "What does the function return?",
+      "narration": "Function of index and capacity returns the maximum reward using items from zero through that index, with at most that much capacity. Index tells us which item we are deciding about. Capacity tells us how much room remains.",
+      "highlight": [
+        0
+      ],
+      "equation": "func(index, capacity) → best reward",
+      "note": "The return value is a reward—not a weight or item count."
+    },
+    {
+      "id": "step-3",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(2, 4)",
+      "narration": "We enter function 2, 4. We can decide about item C. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)"
+      ],
+      "capacity": 4,
+      "maxCapacity": 4,
+      "activeItem": 2,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-4",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "First: skip C",
+      "narration": "First we do not choose item C. Call function 1, 4. The index decreases, but the capacity stays the same. This call must finish before we continue.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)"
+      ],
+      "equation": "skip = func(1, 4)",
+      "note": "Skipping costs no capacity."
+    },
+    {
+      "id": "step-5",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(1, 4)",
+      "narration": "We enter function 1, 4. We can decide about item B. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)"
+      ],
+      "capacity": 4,
+      "maxCapacity": 4,
+      "activeItem": 1,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-6",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "First: skip B",
+      "narration": "First we do not choose item B. Call function 0, 4. The index decreases, but the capacity stays the same. This call must finish before we continue.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)"
+      ],
+      "equation": "skip = func(0, 4)",
+      "note": "Skipping costs no capacity."
+    },
+    {
+      "id": "step-7",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(0, 4)",
+      "narration": "We enter function 0, 4. We can decide about item A. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 4)"
+      ],
+      "capacity": 4,
+      "maxCapacity": 4,
+      "activeItem": 0,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-8",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "First: skip A",
+      "narration": "First we do not choose item A. Call function -1, 4. The index decreases, but the capacity stays the same. This call must finish before we continue.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 4)"
+      ],
+      "equation": "skip = func(-1, 4)",
+      "note": "Skipping costs no capacity."
+    },
+    {
+      "id": "step-9",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(-1, 4)",
+      "narration": "We enter function -1, 4. There are no items left. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 4)",
+        "func(-1, 4)"
+      ],
+      "capacity": 4,
+      "maxCapacity": 4,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-10",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Base case: return 0",
+      "narration": "The index is negative. There are no items left. Return zero reward. We check this before accessing any item array.",
+      "highlight": [
+        2
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 4)",
+        "func(-1, 4)"
+      ],
+      "returnValue": 0,
+      "note": "No remaining items → zero additional reward."
+    },
+    {
+      "id": "step-11",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Skip branch returns 0",
+      "narration": "The child returned 0. Store that reward in this call's local answer. It is the best result if we skip A. Now we check whether taking the item fits.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 4)"
+      ],
+      "equation": "ans = 0",
+      "note": "The child finishes. The waiting parent resumes."
+    },
+    {
+      "id": "step-12",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Now: take A",
+      "narration": "Item A fits. Its weight is 1. Subtract that from capacity 4, leaving 3. Solve the remaining smaller problem, then add this item's value 6. Index decreases so we cannot reuse this item.",
+      "highlight": [
+        4,
+        5
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 4)"
+      ],
+      "activeItem": 0,
+      "capacity": 3,
+      "maxCapacity": 4,
+      "equation": "take = 6 + func(-1, 3)",
+      "note": "Subtract weight. Add value. Move to the previous item."
+    },
+    {
+      "id": "step-13",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(-1, 3)",
+      "narration": "We enter function -1, 3. There are no items left. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 4)",
+        "func(-1, 3)"
+      ],
+      "capacity": 3,
+      "maxCapacity": 4,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-14",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Base case: return 0",
+      "narration": "The index is negative. There are no items left. Return zero reward. We check this before accessing any item array.",
+      "highlight": [
+        2
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 4)",
+        "func(-1, 3)"
+      ],
+      "returnValue": 0,
+      "note": "No remaining items → zero additional reward."
+    },
+    {
+      "id": "step-15",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Compare 0 and 6",
+      "narration": "The take child returned 0. Add value 6 to get 6. Skipping gives 0. Taking gives 6. Maximum chooses 6. These are two possibilities, not two items being added together.",
+      "highlight": [
+        5
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 4)"
+      ],
+      "compare": [
+        "skip: 0",
+        "take: 6"
+      ],
+      "equation": "ans = max(0, 6) = 6",
+      "note": "Compare the complete rewards of the two branches."
+    },
+    {
+      "id": "step-16",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Return 6 from func(0, 4)",
+      "narration": "This call is finished. Return 6 to its parent. The parent receives a number, not the child's local variables.",
+      "highlight": [
+        7
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 4)"
+      ],
+      "returnValue": 6,
+      "note": "A return goes back to the immediately waiting caller."
+    },
+    {
+      "id": "step-17",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Skip branch returns 6",
+      "narration": "The child returned 6. Store that reward in this call's local answer. It is the best result if we skip B. Now we check whether taking the item fits.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)"
+      ],
+      "equation": "ans = 6",
+      "note": "The child finishes. The waiting parent resumes."
+    },
+    {
+      "id": "step-18",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Now: take B",
+      "narration": "Item B fits. Its weight is 2. Subtract that from capacity 4, leaving 2. Solve the remaining smaller problem, then add this item's value 10. Index decreases so we cannot reuse this item.",
+      "highlight": [
+        4,
+        5
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)"
+      ],
+      "activeItem": 1,
+      "capacity": 2,
+      "maxCapacity": 4,
+      "equation": "take = 10 + func(0, 2)",
+      "note": "Subtract weight. Add value. Move to the previous item."
+    },
+    {
+      "id": "step-19",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(0, 2)",
+      "narration": "We enter function 0, 2. We can decide about item A. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 2)"
+      ],
+      "capacity": 2,
+      "maxCapacity": 4,
+      "activeItem": 0,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-20",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "First: skip A",
+      "narration": "First we do not choose item A. Call function -1, 2. The index decreases, but the capacity stays the same. This call must finish before we continue.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 2)"
+      ],
+      "equation": "skip = func(-1, 2)",
+      "note": "Skipping costs no capacity."
+    },
+    {
+      "id": "step-21",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(-1, 2)",
+      "narration": "We enter function -1, 2. There are no items left. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 2)",
+        "func(-1, 2)"
+      ],
+      "capacity": 2,
+      "maxCapacity": 4,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-22",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Base case: return 0",
+      "narration": "The index is negative. There are no items left. Return zero reward. We check this before accessing any item array.",
+      "highlight": [
+        2
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 2)",
+        "func(-1, 2)"
+      ],
+      "returnValue": 0,
+      "note": "No remaining items → zero additional reward."
+    },
+    {
+      "id": "step-23",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Skip branch returns 0",
+      "narration": "The child returned 0. Store that reward in this call's local answer. It is the best result if we skip A. Now we check whether taking the item fits.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 2)"
+      ],
+      "equation": "ans = 0",
+      "note": "The child finishes. The waiting parent resumes."
+    },
+    {
+      "id": "step-24",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Now: take A",
+      "narration": "Item A fits. Its weight is 1. Subtract that from capacity 2, leaving 1. Solve the remaining smaller problem, then add this item's value 6. Index decreases so we cannot reuse this item.",
+      "highlight": [
+        4,
+        5
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 2)"
+      ],
+      "activeItem": 0,
+      "capacity": 1,
+      "maxCapacity": 4,
+      "equation": "take = 6 + func(-1, 1)",
+      "note": "Subtract weight. Add value. Move to the previous item."
+    },
+    {
+      "id": "step-25",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(-1, 1)",
+      "narration": "We enter function -1, 1. There are no items left. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 2)",
+        "func(-1, 1)"
+      ],
+      "capacity": 1,
+      "maxCapacity": 4,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-26",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Base case: return 0",
+      "narration": "The index is negative. There are no items left. Return zero reward. We check this before accessing any item array.",
+      "highlight": [
+        2
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 2)",
+        "func(-1, 1)"
+      ],
+      "returnValue": 0,
+      "note": "No remaining items → zero additional reward."
+    },
+    {
+      "id": "step-27",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Compare 0 and 6",
+      "narration": "The take child returned 0. Add value 6 to get 6. Skipping gives 0. Taking gives 6. Maximum chooses 6. These are two possibilities, not two items being added together.",
+      "highlight": [
+        5
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 2)"
+      ],
+      "compare": [
+        "skip: 0",
+        "take: 6"
+      ],
+      "equation": "ans = max(0, 6) = 6",
+      "note": "Compare the complete rewards of the two branches."
+    },
+    {
+      "id": "step-28",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Return 6 from func(0, 2)",
+      "narration": "This call is finished. Return 6 to its parent. The parent receives a number, not the child's local variables.",
+      "highlight": [
+        7
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)",
+        "func(0, 2)"
+      ],
+      "returnValue": 6,
+      "note": "A return goes back to the immediately waiting caller."
+    },
+    {
+      "id": "step-29",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Compare 6 and 16",
+      "narration": "The take child returned 6. Add value 10 to get 16. Skipping gives 6. Taking gives 16. Maximum chooses 16. These are two possibilities, not two items being added together.",
+      "highlight": [
+        5
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)"
+      ],
+      "compare": [
+        "skip: 6",
+        "take: 16"
+      ],
+      "equation": "ans = max(6, 16) = 16",
+      "note": "Compare the complete rewards of the two branches."
+    },
+    {
+      "id": "step-30",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Return 16 from func(1, 4)",
+      "narration": "This call is finished. Return 16 to its parent. The parent receives a number, not the child's local variables.",
+      "highlight": [
+        7
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 4)"
+      ],
+      "returnValue": 16,
+      "note": "A return goes back to the immediately waiting caller."
+    },
+    {
+      "id": "step-31",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Skip branch returns 16",
+      "narration": "The child returned 16. Store that reward in this call's local answer. It is the best result if we skip C. Now we check whether taking the item fits.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)"
+      ],
+      "equation": "ans = 16",
+      "note": "The child finishes. The waiting parent resumes."
+    },
+    {
+      "id": "step-32",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Now: take C",
+      "narration": "Item C fits. Its weight is 3. Subtract that from capacity 4, leaving 1. Solve the remaining smaller problem, then add this item's value 12. Index decreases so we cannot reuse this item.",
+      "highlight": [
+        4,
+        5
+      ],
+      "stack": [
+        "func(2, 4)"
+      ],
+      "activeItem": 2,
+      "capacity": 1,
+      "maxCapacity": 4,
+      "equation": "take = 12 + func(1, 1)",
+      "note": "Subtract weight. Add value. Move to the previous item."
+    },
+    {
+      "id": "step-33",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(1, 1)",
+      "narration": "We enter function 1, 1. We can decide about item B. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)"
+      ],
+      "capacity": 1,
+      "maxCapacity": 4,
+      "activeItem": 1,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-34",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "First: skip B",
+      "narration": "First we do not choose item B. Call function 0, 1. The index decreases, but the capacity stays the same. This call must finish before we continue.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)"
+      ],
+      "equation": "skip = func(0, 1)",
+      "note": "Skipping costs no capacity."
+    },
+    {
+      "id": "step-35",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(0, 1)",
+      "narration": "We enter function 0, 1. We can decide about item A. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)",
+        "func(0, 1)"
+      ],
+      "capacity": 1,
+      "maxCapacity": 4,
+      "activeItem": 0,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-36",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "First: skip A",
+      "narration": "First we do not choose item A. Call function -1, 1. The index decreases, but the capacity stays the same. This call must finish before we continue.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)",
+        "func(0, 1)"
+      ],
+      "equation": "skip = func(-1, 1)",
+      "note": "Skipping costs no capacity."
+    },
+    {
+      "id": "step-37",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(-1, 1)",
+      "narration": "We enter function -1, 1. There are no items left. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)",
+        "func(0, 1)",
+        "func(-1, 1)"
+      ],
+      "capacity": 1,
+      "maxCapacity": 4,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-38",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Base case: return 0",
+      "narration": "The index is negative. There are no items left. Return zero reward. We check this before accessing any item array.",
+      "highlight": [
+        2
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)",
+        "func(0, 1)",
+        "func(-1, 1)"
+      ],
+      "returnValue": 0,
+      "note": "No remaining items → zero additional reward."
+    },
+    {
+      "id": "step-39",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Skip branch returns 0",
+      "narration": "The child returned 0. Store that reward in this call's local answer. It is the best result if we skip A. Now we check whether taking the item fits.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)",
+        "func(0, 1)"
+      ],
+      "equation": "ans = 0",
+      "note": "The child finishes. The waiting parent resumes."
+    },
+    {
+      "id": "step-40",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Now: take A",
+      "narration": "Item A fits. Its weight is 1. Subtract that from capacity 1, leaving 0. Solve the remaining smaller problem, then add this item's value 6. Index decreases so we cannot reuse this item.",
+      "highlight": [
+        4,
+        5
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)",
+        "func(0, 1)"
+      ],
+      "activeItem": 0,
+      "capacity": 0,
+      "maxCapacity": 4,
+      "equation": "take = 6 + func(-1, 0)",
+      "note": "Subtract weight. Add value. Move to the previous item."
+    },
+    {
+      "id": "step-41",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Enter func(-1, 0)",
+      "narration": "We enter function -1, 0. There are no items left. Every call has its own local answer. The parent waits until this call returns.",
+      "highlight": [
+        0
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)",
+        "func(0, 1)",
+        "func(-1, 0)"
+      ],
+      "capacity": 0,
+      "maxCapacity": 4,
+      "note": "Each call owns its local variables."
+    },
+    {
+      "id": "step-42",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Base case: return 0",
+      "narration": "No capacity remains. With positive item weights we cannot take anything else, so return zero reward.",
+      "highlight": [
+        1
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)",
+        "func(0, 1)",
+        "func(-1, 0)"
+      ],
+      "returnValue": 0,
+      "note": "Empty capacity → zero additional reward."
+    },
+    {
+      "id": "step-43",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Compare 0 and 6",
+      "narration": "The take child returned 0. Add value 6 to get 6. Skipping gives 0. Taking gives 6. Maximum chooses 6. These are two possibilities, not two items being added together.",
+      "highlight": [
+        5
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)",
+        "func(0, 1)"
+      ],
+      "compare": [
+        "skip: 0",
+        "take: 6"
+      ],
+      "equation": "ans = max(0, 6) = 6",
+      "note": "Compare the complete rewards of the two branches."
+    },
+    {
+      "id": "step-44",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Return 6 from func(0, 1)",
+      "narration": "This call is finished. Return 6 to its parent. The parent receives a number, not the child's local variables.",
+      "highlight": [
+        7
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)",
+        "func(0, 1)"
+      ],
+      "returnValue": 6,
+      "note": "A return goes back to the immediately waiting caller."
+    },
+    {
+      "id": "step-45",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Skip branch returns 6",
+      "narration": "The child returned 6. Store that reward in this call's local answer. It is the best result if we skip B. Now we check whether taking the item fits.",
+      "highlight": [
+        3
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)"
+      ],
+      "equation": "ans = 6",
+      "note": "The child finishes. The waiting parent resumes."
+    },
+    {
+      "id": "step-46",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "B does not fit",
+      "narration": "This item weighs 2, but capacity is only 1. Do not make a take call. Keep the skip answer 6.",
+      "highlight": [
+        4
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)"
+      ],
+      "equation": "2 > 1",
+      "note": "The fit check prevents a negative-capacity branch."
+    },
+    {
+      "id": "step-47",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Return 6 from func(1, 1)",
+      "narration": "This call is finished. Return 6 to its parent. The parent receives a number, not the child's local variables.",
+      "highlight": [
+        7
+      ],
+      "stack": [
+        "func(2, 4)",
+        "func(1, 1)"
+      ],
+      "returnValue": 6,
+      "note": "A return goes back to the immediately waiting caller."
+    },
+    {
+      "id": "step-48",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Compare 16 and 18",
+      "narration": "The take child returned 6. Add value 12 to get 18. Skipping gives 16. Taking gives 18. Maximum chooses 18. These are two possibilities, not two items being added together.",
+      "highlight": [
+        5
+      ],
+      "stack": [
+        "func(2, 4)"
+      ],
+      "compare": [
+        "skip: 16",
+        "take: 18"
+      ],
+      "equation": "ans = max(16, 18) = 18",
+      "note": "Compare the complete rewards of the two branches."
+    },
+    {
+      "id": "step-49",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "code-stack",
+      "title": "Return 18 from func(2, 4)",
+      "narration": "This call is finished. Return 18 to its parent. The parent receives a number, not the child's local variables.",
+      "highlight": [
+        7
+      ],
+      "stack": [
+        "func(2, 4)"
+      ],
+      "returnValue": 18,
+      "note": "A return goes back to the immediately waiting caller."
+    },
+    {
+      "id": "step-50",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "concept",
+      "title": "The answer: A + C",
+      "narration": "The final maximum reward is 18. Choose A and C. Their total weight is four and their total value is eighteen. Skipping C gave sixteen. Taking C gave twelve plus six, which is eighteen.",
+      "equation": "Weight: 1 + 3 = 4 · Reward: 6 + 12 = 18",
+      "returnValue": 18,
+      "note": "0/1 means each item is either taken once or not taken."
+    },
+    {
+      "id": "step-51",
+      "chapter": "0/1 KNAPSACK · CALL BY CALL",
+      "layout": "concept",
+      "title": "Why recursion becomes slow",
+      "narration": "In the worst case every item has two choices, so plain recursion takes exponential time, O of two to the n. The recursion depth is at most n, so auxiliary stack space is O of n. Calls can repeat the same index and capacity. Memoization stores those answers, but that is a separate next concept.",
+      "equation": "Worst time O(2ⁿ) · Stack O(n)",
+      "note": "Positive integer weights are assumed. No memoization in this approach."
+    }
+  ],
+  "result": 18,
+  "calls": [
+    [
+      2,
+      4
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      -1,
+      4
+    ],
+    [
+      -1,
+      3
+    ],
+    [
+      0,
+      2
+    ],
+    [
+      -1,
+      2
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      -1,
+      0
+    ]
+  ]
+}

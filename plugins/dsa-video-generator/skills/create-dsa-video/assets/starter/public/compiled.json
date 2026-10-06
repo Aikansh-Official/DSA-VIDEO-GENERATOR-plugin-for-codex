@@ -1,0 +1,1 @@
+{"title":"Prepare a lesson first","codeLines":[],"scenes":[{"id":"setup","title":"Run node scripts/lab.mjs prepare --lesson two-sum","layout":"concept","from":0,"durationInFrames":120,"audio":null}],"durationInFrames":120}

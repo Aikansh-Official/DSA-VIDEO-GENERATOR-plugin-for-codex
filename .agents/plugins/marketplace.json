@@ -1,0 +1,10 @@
+{
+  "name": "aikansh-dsa-videos",
+  "interface": {"displayName": "Aikansh's DSA Videos"},
+  "plugins": [{
+    "name": "dsa-video-generator",
+    "source": {"source": "local", "path": "./plugins/dsa-video-generator"},
+    "policy": {"installation": "AVAILABLE", "authentication": "ON_INSTALL"},
+    "category": "Developer Tools"
+  }]
+}

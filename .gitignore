@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.qa/
+settings.json
+**/out/
+**/public/narration/
+*.mp4
+*.wav
+*.onnx
+.env*
+!.env.example
+__pycache__/
+.venv*/

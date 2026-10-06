@@ -1,0 +1,421 @@
+{
+  "version": 1,
+  "id": "two-sum",
+  "title": "Two Sum · LeetCode #1",
+  "domain": "dsa",
+  "language": "en",
+  "orientation": "portrait",
+  "sourceUrl": "https://leetcode.com/problems/two-sum/description/",
+  "codeLines": [],
+  "scenes": [
+    {
+      "id": "problem",
+      "title": "Two numbers. One target.",
+      "chapter": "01 / THE PROBLEM",
+      "layout": "visual",
+      "narration": "Two Sum asks for two different positions whose numbers add up to a target. In this official LeetCode example, two plus seven makes nine. The answer is positions zero and one. We return indices, not the numbers themselves.",
+      "equation": "2 + 7 = 9",
+      "note": "Return positions: [0, 1]",
+      "array": [
+        2,
+        7,
+        11,
+        15
+      ],
+      "target": 9,
+      "activeIndices": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "contract",
+      "title": "Understand the rules",
+      "chapter": "01 / THE PROBLEM",
+      "layout": "visual",
+      "narration": "The array is not necessarily sorted. Negative numbers and repeated values are allowed. LeetCode guarantees exactly one valid pair, and the answer can be returned in either order. There can be up to ten thousand elements. You cannot use one position twice.",
+      "equation": "Different indices • one answer",
+      "note": "Unsorted input. Negative values and duplicates are allowed."
+    },
+    {
+      "id": "brute",
+      "title": "Try every distinct pair",
+      "chapter": "02 / BRUTE FORCE",
+      "layout": "visual",
+      "narration": "Start with the simplest idea: try each pair. Think of choosing two price tags to match a budget. Fix the first position, called i, then try every later position, called j. Starting j just after i avoids using the same item twice and avoids checking reversed duplicates.",
+      "equation": "Fix i. Move j to the right.",
+      "note": "i = first position · j = second position",
+      "array": [
+        3,
+        2,
+        4
+      ],
+      "target": 6
+    },
+    {
+      "id": "pair1",
+      "title": "Pair 1: positions 0 and 1",
+      "chapter": "02 / BRUTE FORCE",
+      "layout": "visual",
+      "narration": "Use the second official example: three, two, four, with target six. First compare positions zero and one. Three plus two is five. It is not six, so keep the first position and advance the second.",
+      "equation": "3 + 2 = 5 ≠ 6",
+      "note": "Keep i = 0. Move j from 1 to 2.",
+      "array": [
+        3,
+        2,
+        4
+      ],
+      "target": 6,
+      "activeIndices": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "pair2",
+      "title": "Pair 2: positions 0 and 2",
+      "chapter": "02 / BRUTE FORCE",
+      "layout": "visual",
+      "narration": "Now compare positions zero and two. Three plus four is seven. Still no match. We have exhausted all later partners for position zero. Move i to one, and start j at two.",
+      "equation": "3 + 4 = 7 ≠ 6",
+      "note": "No partner for index 0. Move i to 1.",
+      "array": [
+        3,
+        2,
+        4
+      ],
+      "target": 6,
+      "activeIndices": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": "pair3",
+      "title": "Pair 3: positions 1 and 2",
+      "chapter": "02 / BRUTE FORCE",
+      "layout": "visual",
+      "narration": "Two plus four equals six. Return positions one and two. This method is correct because every pair of distinct positions appears once in the search. If a valid pair exists, we will reach it.",
+      "equation": "2 + 4 = 6 → [1, 2]",
+      "note": "All three distinct pairs were checked.",
+      "array": [
+        3,
+        2,
+        4
+      ],
+      "target": 6,
+      "activeIndices": [
+        1,
+        2
+      ],
+      "success": true
+    },
+    {
+      "id": "brutecost",
+      "title": "Why quadratic time?",
+      "chapter": "02 / BRUTE FORCE",
+      "layout": "visual",
+      "narration": "For n elements, the first position can have n minus one partners, the next has n minus two, and so on. The total is n times n minus one divided by two. That grows quadratically, so worst case time is O of n squared. Only a few variables are needed, so auxiliary space is constant.",
+      "equation": "(n − 1) + … + 1 = n(n − 1)/2",
+      "note": "Worst-case time O(n²) · Auxiliary space O(1)"
+    },
+    {
+      "id": "brutecode",
+      "title": "The pair search in C++",
+      "chapter": "02 / BRUTE FORCE CODE",
+      "layout": "visual",
+      "narration": "Here is the same reasoning in C plus plus. The outer loop chooses i. The inner loop starts j at i plus one. Compare the two values, and return their positions when the sum matches. The empty return is a defensive fallback; the problem guarantees a solution.",
+      "equation": "j starts at i + 1",
+      "note": "Each unordered pair appears exactly once.",
+      "codeLines": [
+        "vector<int> twoSum(vector<int>& a, int target) {",
+        "  int n = a.size();",
+        "  for (int i = 0; i < n; ++i) {",
+        "    for (int j = i + 1; j < n; ++j) {",
+        "      if (a[i] + a[j] == target)",
+        "        return {i, j};",
+        "    }",
+        "  }",
+        "  return {};",
+        "}"
+      ],
+      "highlight": [
+        3
+      ]
+    },
+    {
+      "id": "idea",
+      "title": "Ask a more useful question",
+      "chapter": "03 / OPTIMIZATION",
+      "layout": "visual",
+      "narration": "The expensive part is repeatedly searching for a partner. Instead, ask what partner this value needs. If the target is six and the current number is four, its partner must be two. Can we remember earlier numbers so this question is quick to answer?",
+      "equation": "need = target − current",
+      "note": "At 4: have we already seen 2?",
+      "array": [
+        3,
+        2,
+        4
+      ],
+      "target": 6,
+      "activeIndices": [
+        2
+      ]
+    },
+    {
+      "id": "map",
+      "title": "A notebook of earlier values",
+      "chapter": "03 / OPTIMIZATION",
+      "layout": "visual",
+      "narration": "Use a hash map as a notebook. Its key is a number we have seen, and its value is that numbers position. Before processing each position, every entry comes from an earlier position. This is our invariant. It ensures a stored partner is always a different element.",
+      "equation": "seen: value → earlier index",
+      "note": "Invariant: every stored index is before the current index.",
+      "seen": []
+    },
+    {
+      "id": "check0",
+      "title": "1. Check index 0",
+      "chapter": "04 / HASH-MAP DRY RUN",
+      "layout": "visual",
+      "narration": "Begin with an empty map. At position zero, the number is three, so we need another three. The map is empty. There is no earlier partner. Do not pair this three with itself.",
+      "equation": "6 − 3 = 3 → not found",
+      "note": "Check before storing the current value.",
+      "array": [
+        3,
+        2,
+        4
+      ],
+      "target": 6,
+      "activeIndices": [
+        0
+      ],
+      "seen": []
+    },
+    {
+      "id": "store0",
+      "title": "2. Store index 0",
+      "chapter": "04 / HASH-MAP DRY RUN",
+      "layout": "visual",
+      "narration": "Store three with index zero. This is a separate action after the failed lookup. Now later numbers can use this three as their partner. Advance to the next position.",
+      "equation": "seen[3] = 0",
+      "note": "Three is now available to future positions.",
+      "array": [
+        3,
+        2,
+        4
+      ],
+      "target": 6,
+      "activeIndices": [
+        0
+      ],
+      "seen": [
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "check1",
+      "title": "3. Check index 1",
+      "chapter": "04 / HASH-MAP DRY RUN",
+      "layout": "visual",
+      "narration": "At position one, the number is two. Its missing partner is four. Our map contains only three, so the lookup fails. We cannot return an answer yet.",
+      "equation": "6 − 2 = 4 → not found",
+      "note": "The notebook contains 3, not 4.",
+      "array": [
+        3,
+        2,
+        4
+      ],
+      "target": 6,
+      "activeIndices": [
+        1
+      ],
+      "seen": [
+        [
+          3,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "store1",
+      "title": "4. Store index 1",
+      "chapter": "04 / HASH-MAP DRY RUN",
+      "layout": "visual",
+      "narration": "Store two with index one. The notebook now remembers three at zero and two at one. Move to position two. Notice that every stored index is still before the position we are about to process.",
+      "equation": "seen[2] = 1",
+      "note": "Both entries belong to earlier positions.",
+      "array": [
+        3,
+        2,
+        4
+      ],
+      "target": 6,
+      "activeIndices": [
+        1
+      ],
+      "seen": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ]
+    },
+    {
+      "id": "match",
+      "title": "5. Check index 2: match!",
+      "chapter": "04 / HASH-MAP DRY RUN",
+      "layout": "visual",
+      "narration": "At position two, the number is four, so we need two. This time two is in the notebook at position one. Return the stored index one and the current index two. Their values add up to six. We stop; there is no need to store the four.",
+      "equation": "6 − 4 = 2 → index 1",
+      "note": "Return [1, 2]. Stop immediately.",
+      "array": [
+        3,
+        2,
+        4
+      ],
+      "target": 6,
+      "activeIndices": [
+        1,
+        2
+      ],
+      "seen": [
+        [
+          3,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "success": true
+    },
+    {
+      "id": "duplicates",
+      "title": "Equal values, different indices",
+      "chapter": "05 / THE IMPORTANT TRAP",
+      "layout": "visual",
+      "narration": "Duplicates are valid. For three and three with target six, the first three checks an empty map, then gets stored. The second three finds the first one, so the answer is zero and one. If you stored before checking, the first three could incorrectly match itself. The order matters.",
+      "equation": "Check → then store",
+      "note": "[3, 3], target 6 → indices [0, 1]",
+      "array": [
+        3,
+        3
+      ],
+      "target": 6,
+      "activeIndices": [
+        0,
+        1
+      ],
+      "success": true
+    },
+    {
+      "id": "code1",
+      "title": "Remember and compute",
+      "chapter": "06 / C++ CONNECTION",
+      "layout": "visual",
+      "narration": "Now connect the optimized idea to code. The unordered map stores integers mapped to indices. The loop visits each index i. The variable need is target minus the current array value. We keep the original array order so the returned indices refer to the original input.",
+      "equation": "key = value · stored value = index",
+      "note": "i is the current zero-based position.",
+      "codeLines": [
+        "vector<int> twoSum(vector<int>& a, int target) {",
+        "  unordered_map<int, int> seen;",
+        "  for (int i = 0; i < (int)a.size(); ++i) {",
+        "    int need = target - a[i];",
+        "    auto it = seen.find(need);",
+        "    if (it != seen.end())",
+        "      return {it->second, i};",
+        "    seen[a[i]] = i;",
+        "  }",
+        "  return {};",
+        "}"
+      ],
+      "highlight": [
+        1
+      ]
+    },
+    {
+      "id": "code2",
+      "title": "Look up the missing partner",
+      "chapter": "06 / C++ CONNECTION",
+      "layout": "visual",
+      "narration": "Find searches for the missing partner. It returns an iterator named it. If that iterator is not the maps end marker, a match exists. It, arrow, second gives the earlier stored index. Return that index together with i. Using find is important because it does not insert a missing key.",
+      "equation": "find(need) → found or end()",
+      "note": "find does not insert a missing key.",
+      "codeLines": [
+        "vector<int> twoSum(vector<int>& a, int target) {",
+        "  unordered_map<int, int> seen;",
+        "  for (int i = 0; i < (int)a.size(); ++i) {",
+        "    int need = target - a[i];",
+        "    auto it = seen.find(need);",
+        "    if (it != seen.end())",
+        "      return {it->second, i};",
+        "    seen[a[i]] = i;",
+        "  }",
+        "  return {};",
+        "}"
+      ],
+      "highlight": [
+        4
+      ]
+    },
+    {
+      "id": "code3",
+      "title": "Store only after checking",
+      "chapter": "06 / C++ CONNECTION",
+      "layout": "visual",
+      "narration": "If no partner was found, store the current value with its index. Then the loop advances. Updating the index for a repeated value is fine: a later matching number only needs one earlier occurrence. The empty return handles no answer defensively, though LeetCode guarantees one.",
+      "equation": "seen[a[i]] = i",
+      "note": "Lookup first. Insert second. Advance last.",
+      "codeLines": [
+        "vector<int> twoSum(vector<int>& a, int target) {",
+        "  unordered_map<int, int> seen;",
+        "  for (int i = 0; i < (int)a.size(); ++i) {",
+        "    int need = target - a[i];",
+        "    auto it = seen.find(need);",
+        "    if (it != seen.end())",
+        "      return {it->second, i};",
+        "    seen[a[i]] = i;",
+        "  }",
+        "  return {};",
+        "}"
+      ],
+      "highlight": [
+        7
+      ]
+    },
+    {
+      "id": "proof",
+      "title": "The later partner finds the earlier",
+      "chapter": "07 / WHY IT WORKS",
+      "layout": "visual",
+      "narration": "Why can this method not miss the answer? Name the solution indices p and q, with p before q. Unless we already returned a valid answer, the value at p has been stored when we reach q. The complement lookup therefore finds it. Because all stored indices are earlier, the two indices are distinct.",
+      "equation": "a[p] + a[q] = target, p < q",
+      "note": "At q, a[p] is already in seen."
+    },
+    {
+      "id": "cost",
+      "title": "Time saved. Memory spent.",
+      "chapter": "07 / COMPLEXITY",
+      "layout": "visual",
+      "narration": "We make one pass, with a lookup and at most one insertion per element. Hash operations take expected constant time, so total expected time is linear. The map can store a linear number of entries, so auxiliary space is O of n. Severe hash collisions can make the worst case quadratic. The linear claim is an expected-time claim.",
+      "equation": "Expected O(n) time · O(n) space",
+      "note": "Hash collisions: worst-case total time can be O(n²)."
+    },
+    {
+      "id": "finish",
+      "title": "Remember what future values need",
+      "chapter": "08 / TAKEAWAY",
+      "layout": "visual",
+      "narration": "Brute force repeats the partner search, spending quadratic time and constant extra space. The map trades linear extra memory for expected linear time. Negative numbers and duplicates need no special treatment. Remember the reusable pattern: compute the missing partner, check earlier values, then store the current one. That is Two Sum.",
+      "equation": "Brute force: search again\nHash map: remember once",
+      "note": "Negatives and duplicates work. Return indices. Never reuse an element."
+    }
+  ]
+}

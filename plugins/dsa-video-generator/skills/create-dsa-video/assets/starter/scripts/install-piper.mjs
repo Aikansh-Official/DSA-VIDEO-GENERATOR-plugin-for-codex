@@ -1,0 +1,13 @@
+import {spawnSync} from 'node:child_process';
+import {resolve,join} from 'node:path';
+import {existsSync,mkdirSync} from 'node:fs';
+const args=process.argv.slice(2),get=n=>args[args.indexOf('--'+n)+1];
+if(!args.includes('--python')||!args.includes('--voice'))throw Error('Supply --python <interpreter> --voice <model-id>');
+const root=resolve(import.meta.dirname,'..'),env=join(root,'.piper-env'),voice=get('voice');
+if(!/^[a-z]{2}_[A-Z]{2}-[a-z0-9_]+-(low|medium|high|x_low)$/.test(voice))throw Error('Invalid Piper model ID');
+const run=(bin,a)=>{const r=spawnSync(bin,a,{stdio:'inherit',windowsHide:true});if(r.error||r.status!==0)throw Error('Piper setup failed');};
+if(!existsSync(env))run(get('python'),['-m','venv',env]);
+const python=join(env,process.platform==='win32'?'Scripts/python.exe':'bin/python');
+run(python,['-m','pip','install','piper-tts==1.4.2']);mkdirSync(join(root,'voices'),{recursive:true});
+run(python,['-m','piper.download_voices',voice,'--data-dir',join(root,'voices')]);
+console.log(`Configure with: node scripts/lab.mjs configure --backend piper --python "${python}" --model "${join(root,'voices',voice+'.onnx')}"`);
